@@ -28,6 +28,13 @@ resetBtn.addEventListener('click', function(){
     initializeGrid(size);
 });
 
+//prepare select form
+let option = "black";
+let currentBlackValue = 0;
+let colorOptions = document.querySelector("#colors");
+colorOptions.addEventListener('change', function(){
+    option = colorOptions.value;
+});
 
 //adding all the elements to html
 let body = document.querySelector('body');
@@ -38,8 +45,9 @@ body.appendChild(container);
 
 //functions
 function changeColor(e){
-    console.log(e);
-    e.target.style.backgroundColor = generateRandomColor();
+    if (option == "black") e.target.style.backgroundColor = "black";
+    if (option == "random") e.target.style.backgroundColor = generateRandomColor();
+    if (option == "blackGradient") e.target.style.backgroundColor = createBlackGradient();
 }
 
 function generateRandomColor(){
@@ -73,4 +81,11 @@ function initializeGrid(size){
     
         grid.appendChild(gridElement);
     }
+}
+
+function createBlackGradient(){
+    let newBlackValue = currentBlackValue + 8;
+    if (newBlackValue > 255) newBlackValue = 0;
+    currentBlackValue = newBlackValue;
+    return "rgb(" + newBlackValue + "," + newBlackValue + "," + newBlackValue + ")";
 }
